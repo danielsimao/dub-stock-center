@@ -1,0 +1,27 @@
+{
+  "name": "daniel-rui-simao",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "client-install": "yarn --cwd ./client",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "yarn --cwd ./client start",
+    "dev": "concurrently \"yarn server\" \"yarn client\"",
+    "heroku-postbuild": "set NPM_CONFIG_PRODUCTION=false && yarn --cwd ./client && yarn --cwd ./client build"
+  },
+  "repository": "https://github.com/HostelworldPorto/daniel-rui-simao.git",
+  "author": "Daniel Simão <rui.daniel.simao@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "concurrently": "^4.1.0",
+    "config": "^3.1.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.5.12"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}
