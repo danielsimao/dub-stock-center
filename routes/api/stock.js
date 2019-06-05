@@ -8,11 +8,7 @@ const axios = require("axios");
 //@acess Public
 
 router.get("/", async (req, res) => {
-  // const { date, symbol, currency } = req.body;
-
-  const currency = "DKK";
-  let symbol = "AMZN";
-  let date = "2018-01-02";
+  const { date, symbol, currency } = req.body;
 
   const { usd, selectedCurr } = await getAllCurrenciesEUR(currency);
 

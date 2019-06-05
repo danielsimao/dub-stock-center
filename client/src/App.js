@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import AppNavbar from "./components/AppNavbar";
-import ShoppingList from "./components/ShoppingList";
-import ItemModal from "./components/ItemModal";
+// import ShoppingList from "./components/ShoppingList";
+// import ItemModal from "./components/ItemModal";
+import StockCenter from "./components/StockCenter";
 import { Container } from "reactstrap";
 import { loadUser } from "./actions/authActions";
 import { connect } from "react-redux";
@@ -23,13 +24,11 @@ const App = ({ loadUser, auth }) => {
 
   return (
     <div className="App">
-      {console.log(auth)}
       {mount && (
         <>
           <AppNavbar />
           <Container>
-            <ItemModal />
-            <ShoppingList />
+            <StockCenter />
           </Container>
         </>
       )}
