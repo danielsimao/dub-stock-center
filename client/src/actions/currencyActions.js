@@ -4,7 +4,6 @@ import { returnErrors } from "./errorActions";
 
 export const getCurrencies = () => dispatch => {
   dispatch(setCurrenciesLoading());
-  console.log(1);
   axios
     .get("/api/currency/symbols")
     .then(res =>
