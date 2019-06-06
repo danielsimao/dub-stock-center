@@ -3,21 +3,24 @@ import {
   InputGroup,
   InputGroupButtonDropdown,
   Input,
-  Dropdown,
+  Button,
   Container,
-  ButtonDropdown,
+  Row,
+  Col,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
+  Form,
+  FormGroup,
+  Label,
+  CustomInput
 } from "reactstrap";
 import { getCurrencies } from "../actions/currencyActions";
 import { connect } from "react-redux";
 import Calendar from "react-calendar";
 
 const StockCenter = props => {
-  const [isOpenCurr, toggleCurr] = useState(false);
-  const [isOpenCalender, toggleCalender] = useState(false);
-
+  const [isOpen, toggle] = useState(false);
   const [currencies, setCurrencies] = useState(null);
   const [currency, setCurrency] = useState(null);
   const [date, setDate] = useState(new Date());
@@ -36,56 +39,48 @@ const StockCenter = props => {
   return (
     <div>
       <Container>
-        <ButtonDropdown
-          addonType="append"
-          isOpen={isOpenCurr}
-          toggle={() => toggleCurr(!isOpenCurr)}
-        >
-          <DropdownToggle caret>
-            {currency ? currency : "Currency"}
-          </DropdownToggle>
-          <DropdownMenu
-            modifiers={{
-              setMaxHeight: {
-                enabled: true,
-                order: 890,
-                fn: data => {
-                  return {
-                    ...data,
-                    styles: {
-                      ...data.styles,
-                      overflow: "auto",
-                      maxHeight: 100
-                    }
-                  };
-                }
-              }
-            }}
-          >
-            {currencies &&
-              currencies.map((currency, id) => (
-                <DropdownItem onClick={() => setCurrency(currency)} key={id}>
-                  {currency}
-                </DropdownItem>
-              ))}
-          </DropdownMenu>
-        </ButtonDropdown>
-        <InputGroup>
-          <Input />
-
-          <InputGroupButtonDropdown
-            addonType="prepend"
-            isOpen={isOpenCalender}
-            toggle={() => toggleCalender(!isOpenCalender)}
-          >
-            <DropdownToggle split outline />
-            <DropdownMenu>
-              <DropdownItem>
-                <Calendar onChange={date => setDate(date)} value={date} />{" "}
-              </DropdownItem>
-            </DropdownMenu>
-          </InputGroupButtonDropdown>
-        </InputGroup>
+        <Form style={{ justifyContent: "center" }} inline>
+          {" "}
+          <FormGroup className="mb-2 mr-sm-5 mb-sm-0">
+            <Label for="exampleCustomSelect" className="mr-sm-2">
+              Currency:
+            </Label>
+            <CustomInput
+              type="select"
+              id="exampleCustomSelect"
+              name="customSelect"
+              placeholder={currency}
+            >
+              {currencies &&
+                currencies.map((currency, id) => (
+                  <option onClick={() => setCurrency(currency)} key={id}>
+                    {currency}
+                  </option>
+                ))}
+            </CustomInput>
+          </FormGroup>
+          <FormGroup className="mb-2 mr-sm-5 mb-sm-0">
+            <Label for="date" className="mr-sm-2">
+              Date:
+            </Label>
+            <InputGroup id="date">
+              <Input placeholder={date} />
+              <InputGroupButtonDropdown
+                addonType="prepend"
+                isOpen={isOpen}
+                toggle={() => toggle(!isOpen)}
+              >
+                <DropdownToggle split outline />
+                <DropdownMenu>
+                  <DropdownItem>
+                    <Calendar onChange={date => setDate(date)} value={date} />{" "}
+                  </DropdownItem>
+                </DropdownMenu>
+              </InputGroupButtonDropdown>
+            </InputGroup>
+          </FormGroup>
+          <Button color="secondary">Search</Button>{" "}
+        </Form>
       </Container>
     </div>
   );
