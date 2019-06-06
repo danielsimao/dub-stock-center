@@ -5,19 +5,32 @@ import {
   Input,
   Button,
   Container,
-  Row,
-  Col,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem,
   Form,
   FormGroup,
   Label,
-  CustomInput
+  CustomInput,
+  Row,
+  Col
 } from "reactstrap";
 import { getCurrencies } from "../actions/currencyActions";
 import { connect } from "react-redux";
 import Calendar from "react-calendar";
+import { format } from "date-fns";
+
+const stocks = [
+  "TSLA",
+  "AAPL",
+  "MSFT",
+  "AMZN",
+  "CSCO",
+  "INTC",
+  "GOOG",
+  "SBUX",
+  "EBAY",
+  "CTXS"
+];
 
 const StockCenter = props => {
   const [isOpen, toggle] = useState(false);
@@ -64,7 +77,7 @@ const StockCenter = props => {
               Date:
             </Label>
             <InputGroup id="date">
-              <Input placeholder={date} />
+              <Input placeholder={format(date, "YYYY-MM-DD")} />
               <InputGroupButtonDropdown
                 addonType="prepend"
                 isOpen={isOpen}
@@ -72,15 +85,30 @@ const StockCenter = props => {
               >
                 <DropdownToggle split outline />
                 <DropdownMenu>
-                  <DropdownItem>
-                    <Calendar onChange={date => setDate(date)} value={date} />{" "}
-                  </DropdownItem>
+                  <Calendar
+                    activeStartDate={date}
+                    onChange={date => setDate(date)}
+                  />{" "}
                 </DropdownMenu>
               </InputGroupButtonDropdown>
             </InputGroup>
           </FormGroup>
           <Button color="secondary">Search</Button>{" "}
         </Form>
+
+        <Row style={{ justifyContent: "center" }}>
+          {stocks.map((stock, id) => (
+            <Col key={id}>
+              <Button
+                style={{ width: "5rem", marginTop: "1rem" }}
+                outline
+                color="secondary"
+              >
+                {stock}
+              </Button>{" "}
+            </Col>
+          ))}
+        </Row>
       </Container>
     </div>
   );

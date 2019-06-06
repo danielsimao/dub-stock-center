@@ -47,7 +47,7 @@ const AppNavbar = ({ auth }) => {
     <div>
       <Navbar color="dark" dark expand="sm" className="mb-5">
         <Container>
-          <NavbarBrand href="/">ShoppingList</NavbarBrand>
+          <NavbarBrand href="/">StockCenter</NavbarBrand>
           <NavbarToggler onClick={() => toggle(!isOpen)} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="ml-auto" navbar>
