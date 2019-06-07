@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import AppNavbar from "./components/AppNavbar";
-// import ShoppingList from "./components/ShoppingList";
-// import ItemModal from "./components/ItemModal";
+
 import StockCenter from "./components/StockCenter";
 import { Container } from "reactstrap";
 import { loadUser } from "./actions/authActions";
