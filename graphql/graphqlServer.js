@@ -56,18 +56,28 @@ function stockConverter(stock, usd, currency) {
 const resolvers = {
   Query: {
     getStock: async (_, { symbol, date, currency }) => {
-      const { data } = await axios
+      const data = await axios
         .get(
           `https://api.worldtradingdata.com/api/v1/history_multi_single_day?symbol=${symbol}&date=${date}&api_token=${config.get(
             "worldTradingDataAPIKey"
           )}`
         )
-        .then(response => response.data)
-        .catch(e => new Error("Bad call"));
-      const { usd, selectedCurr } = await getCurrencyRates(currency);
+        .then(response => {
+          if (!reponse.data.message) {
+            return response.data;
+          } else
+            throw new Error(`No data that found on ${symbol} stock in ${date}`);
+        })
+        .catch(e => new Error(e));
 
-      data[symbol] = stockConverter(data[symbol], usd, selectedCurr);
-      return data;
+      if (data.message) {
+        throw new Error(`No data that found on ${symbol} stock in ${date}`);
+      } else {
+        const { usd, selectedCurr } = await getCurrencyRates(currency);
+
+        data[symbol] = stockConverter(data[symbol], usd, selectedCurr);
+        return data;
+      }
     },
     hello: _ => "Hello"
   }
