@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
 const config = require("config");
+const graphqlServer = require("./graphql/graphqlServer");
 
 const app = express();
 
@@ -30,3 +31,6 @@ if (process.env.NODE_ENV === "production") {
 const port = process.env.PORT || 4000;
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
+graphqlServer.start({ port: 5000 }, ({ port }) =>
+  console.log(`GraphQL Server is running on localhost:${port}`)
+);
