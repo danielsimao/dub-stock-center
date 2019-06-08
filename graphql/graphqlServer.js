@@ -3,30 +3,29 @@ const axios = require("axios");
 const config = require("config");
 
 const typeDefs = `
-
-type Stock {
+  type Stock {
     open: Float!
     close: Float!
     high: Float!
     low: Float!
     volume: Float!
-}
+  }
 
-type Stocks {
-    TSLA: Stock, 
-    AAPL: Stock,
-    MSFT: Stock, 
-    AMZN: Stock, 
-    CSCO: Stock, 
-    INTC: Stock,
-    GOOG: Stock, 
-    SBUX: Stock, 
-    EBAY: Stock, 
+  type Stocks {
+    TSLA: Stock
+    AAPL: Stock
+    MSFT: Stock
+    AMZN: Stock
+    CSCO: Stock
+    INTC: Stock
+    GOOG: Stock
+    SBUX: Stock
+    EBAY: Stock
     CTXS: Stock
-}
+  }
 
   type Query {
-    getStock(symbol: String, date: String, currency: String) : Stocks
+    getStock(symbol: String, date: String, currency: String): Stocks
   }
 `;
 

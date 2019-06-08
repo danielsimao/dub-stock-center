@@ -26,18 +26,26 @@ const StockCenter = props => {
   const [currency, setCurrency] = useState("AED");
   const [date, setDate] = useState(new Date());
   const [symbol, setSymbol] = useState("AMZN");
-
+  const [search, setSearch] = useState({
+    currency: "AED",
+    date: new Date(),
+    symbol: "AMZN"
+  });
+  //TODO: Fix media query
   const QUERY_STOCK = gql`
     query QUERY_STOCK($symbol: String, $date: String, $currency: String) {
       getStock(symbol: $symbol, date: $date, currency: $currency) {
-        ${symbol} {
-          open
+        ${search.symbol} {
+          close
         }
       }
     }
   `;
 
-  const search = refetch => refetch(currency, date, symbol);
+  const searchHandler = e => {
+    e.preventDefault();
+    setSearch({ ...search, currency, date, symbol });
+  };
 
   useEffect(() => setCurrencies(props.currency.currency.currencies), [
     props.currency.currency.currencies
@@ -53,14 +61,21 @@ const StockCenter = props => {
   return (
     <Query
       query={QUERY_STOCK}
-      variables={{ symbol, date: format(date, "YYYY-MM-DD"), currency }}
+      variables={{
+        symbol: search.symbol,
+        date: format(search.date, "YYYY-MM-DD"),
+        currency: search.currency
+      }}
     >
-      {({ loading, error, data, refetch }) => {
-        console.log(data);
+      {({ loading, error, data }) => {
         return (
           <div>
             <Container>
-              <Form style={{ justifyContent: "center" }} inline>
+              <Form
+                onSubmit={searchHandler}
+                style={{ justifyContent: "center" }}
+                inline
+              >
                 {" "}
                 <FormGroup className="mb-2 mr-sm-4 mb-sm-0 mt-4">
                   <Label for="exampleCustomSelect" className="mr-sm-2">
@@ -110,14 +125,19 @@ const StockCenter = props => {
                     onChange={e => setSymbol(e)}
                   />
                 </FormGroup>
-                <Button onClick={() => search(refetch)} className="mt-4">
+                <Button type="submit" className="mt-4">
                   Search
                 </Button>
               </Form>
 
               {error ? (
                 <Alert
-                  style={{ textAlign: "center", marginTop: 20 }}
+                  style={{
+                    margin: "auto",
+                    marginTop: "10rem",
+                    padding: 10,
+                    textAlign: "center"
+                  }}
                   color="warning"
                 >
                   {error.message.split(":")[1]}
@@ -132,13 +152,15 @@ const StockCenter = props => {
                       padding: 10
                     }}
                   >
+                    {" "}
+                    {console.log(data.getStock[symbol])}
                     <h6
                       style={{ fontWeight: 20, color: "grey" }}
                     >{`NASDAQ: ${symbol}`}</h6>
                     <h2 style={{ fontWeight: 20, marginBottom: 2 }}>
                       {new Intl.NumberFormat({
                         minimumFractionDigits: 2
-                      }).format(1234)}
+                      }).format(data.getStock[symbol].close)}
                       <span
                         style={{
                           fontSize: 20,
