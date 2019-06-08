@@ -16,7 +16,7 @@ import { connect } from "react-redux";
 import Calendar from "react-calendar";
 import { format } from "date-fns";
 
-const StockCenter = (props, { setSearch }) => {
+const SearchForm = props => {
   const [isOpen, toggle] = useState(false);
   const [currencies, setCurrencies] = useState(null);
   const [currency, setCurrency] = useState("AED");
@@ -25,7 +25,7 @@ const StockCenter = (props, { setSearch }) => {
 
   const searchHandler = e => {
     e.preventDefault();
-    setSearch({ currency, date, symbol });
+    props.setSearch({ currency, date, symbol: symbol });
   };
 
   useEffect(() => setCurrencies(props.currency.currency.currencies), [
@@ -107,4 +107,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { getCurrencies }
-)(StockCenter);
+)(SearchForm);

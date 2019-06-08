@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import SearchForm from "./SearchForm";
+import SelectedStock from "./SelectedStock";
 
 const StockCenter = () => {
   const [search, setSearch] = useState({
@@ -31,11 +32,12 @@ const StockCenter = () => {
         currency: search.currency
       }}
     >
-      {({ loading, error, data }) => {
+      {({ loading, error, data, refetch }) => {
+        console.log(data);
         return (
           <div>
             <Container>
-              <SearchForm setSearch={setSearch} />
+              <SearchForm setSearch={setSearch} refetch={refetch} />
 
               {error ? (
                 <Alert
@@ -50,39 +52,13 @@ const StockCenter = () => {
                   {error.message.split(":")[1]}
                 </Alert>
               ) : (
-                !loading && (
-                  <div
-                    style={{
-                      margin: "auto",
-                      width: "200px",
-                      marginTop: "10rem",
-                      padding: 10
-                    }}
-                  >
-                    {" "}
-                    <h6 style={{ fontWeight: 20, color: "grey" }}>{`NASDAQ: ${
-                      search.symbol
-                    }`}</h6>
-                    <h2 style={{ fontWeight: 20, marginBottom: 2 }}>
-                      {new Intl.NumberFormat({
-                        minimumFractionDigits: 2
-                      }).format(data.getStock[search.symbol].close)}
-                      <span
-                        style={{
-                          fontSize: 20,
-                          color: "grey",
-                          fontWeight: 10,
-                          marginLeft: 4
-                        }}
-                      >
-                        {search.currency}
-                      </span>
-                    </h2>
-                    <span style={{ marginTop: 0 }}>
-                      {" "}
-                      {format(search.date, "ddd D MMM, YYYY")}{" "}
-                    </span>
-                  </div>
+                true && (
+                  <SelectedStock
+                    close={123}
+                    currency={search.currency}
+                    date={search.date}
+                    symbol={search.symbol}
+                  />
                 )
               )}
             </Container>
