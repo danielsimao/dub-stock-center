@@ -63,7 +63,10 @@ const SearchForm = props => {
           Date:
         </Label>
         <InputGroup id="date">
-          <Input placeholder={format(date, "YYYY-MM-DD")} />
+          <Input
+            value={format(date, "YYYY-MM-DD")}
+            onChange={date => setDate(date)}
+          />
           <InputGroupButtonDropdown
             addonType="prepend"
             isOpen={isOpen}
@@ -89,7 +92,7 @@ const SearchForm = props => {
 
         <Input
           id="stock"
-          placeholder={symbol}
+          value={symbol}
           onChange={e => setSymbol(e.target.value)}
         />
       </FormGroup>

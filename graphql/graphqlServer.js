@@ -11,21 +11,10 @@ const typeDefs = `
     volume: Float!
   }
 
-  type Stocks {
-    TSLA: Stock
-    AAPL: Stock
-    MSFT: Stock
-    AMZN: Stock
-    CSCO: Stock
-    INTC: Stock
-    GOOG: Stock
-    SBUX: Stock
-    EBAY: Stock
-    CTXS: Stock
-  }
+
 
   type Query {
-    getStock(symbol: String, date: String, currency: String): Stocks
+    Stock(symbol: String, date: String, currency: String): Stock
   }
 `;
 
@@ -53,7 +42,7 @@ function stockConverter(stock, usd, currency) {
 //TODO: Handle no data found
 const resolvers = {
   Query: {
-    getStock: async (_, { symbol, date, currency }) => {
+    Stock: async (_, { symbol, date, currency }) => {
       const data = await axios
         .get(
           `https://api.worldtradingdata.com/api/v1/history_multi_single_day?symbol=${symbol}&date=${date}&api_token=${config.get(
@@ -62,7 +51,6 @@ const resolvers = {
         )
         .then(response => response.data)
         .catch(e => new Error(e));
-      console.log(data);
 
       if (data.Message) {
         throw new Error(`No data that found on ${symbol} stock in ${date}`);
@@ -71,7 +59,8 @@ const resolvers = {
         const { data: stock } = data;
 
         stock[symbol] = stockConverter(stock[symbol], usd, selectedCurr);
-        return data;
+
+        return data.data[symbol];
       }
     }
   }

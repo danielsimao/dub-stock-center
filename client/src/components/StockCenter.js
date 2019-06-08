@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Alert } from "reactstrap";
+import { Container, Alert, Spinner } from "reactstrap";
 import { format } from "date-fns";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
@@ -15,10 +15,8 @@ const StockCenter = () => {
   //TODO: Fix media query
   const QUERY_STOCK = gql`
     query QUERY_STOCK($symbol: String, $date: String, $currency: String) {
-      getStock(symbol: $symbol, date: $date, currency: $currency) {
-        ${search.symbol} {
-          close
-        }
+      Stock(symbol: $symbol, date: $date, currency: $currency) {
+        close
       }
     }
   `;
@@ -51,15 +49,25 @@ const StockCenter = () => {
                 >
                   {error.message.split(":")[1]}
                 </Alert>
+              ) : !loading ? (
+                <SelectedStock
+                  close={data.Stock.close}
+                  currency={search.currency}
+                  date={search.date}
+                  symbol={search.symbol}
+                />
               ) : (
-                true && (
-                  <SelectedStock
-                    close={123}
-                    currency={search.currency}
-                    date={search.date}
-                    symbol={search.symbol}
-                  />
-                )
+                <div
+                  style={{
+                    margin: "auto",
+                    marginTop: "10rem",
+                    padding: 10,
+                    textAlign: "center"
+                  }}
+                >
+                  {" "}
+                  <Spinner color="secondary" />
+                </div>
               )}
             </Container>
           </div>
