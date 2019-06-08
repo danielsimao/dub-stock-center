@@ -56,6 +56,7 @@ const StockCenter = props => {
       variables={{ symbol, date: format(date, "YYYY-MM-DD"), currency }}
     >
       {({ loading, error, data, refetch }) => {
+        console.log(data);
         return (
           <div>
             <Container>
@@ -109,7 +110,7 @@ const StockCenter = props => {
                     onChange={e => setSymbol(e)}
                   />
                 </FormGroup>
-                <Button onClick={search} className="mt-4">
+                <Button onClick={() => search(refetch)} className="mt-4">
                   Search
                 </Button>
               </Form>

@@ -27,7 +27,6 @@ type Stocks {
 
   type Query {
     getStock(symbol: String, date: String, currency: String) : Stocks
-    hello: String
   }
 `;
 
@@ -64,17 +63,18 @@ const resolvers = {
         )
         .then(response => response.data)
         .catch(e => new Error(e));
+      console.log(data);
 
       if (data.Message) {
         throw new Error(`No data that found on ${symbol} stock in ${date}`);
       } else {
         const { usd, selectedCurr } = await getCurrencyRates(currency);
+        const { data: stock } = data;
 
-        data[symbol] = stockConverter(data[symbol], usd, selectedCurr);
+        stock[symbol] = stockConverter(stock[symbol], usd, selectedCurr);
         return data;
       }
-    },
-    hello: _ => "Hello"
+    }
   }
 };
 
