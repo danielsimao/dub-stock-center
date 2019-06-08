@@ -27,7 +27,6 @@ type Stocks {
 
   type Query {
     getStock(symbol: String, date: String, currency: String) : Stocks
-    hello: String
   }
 `;
 
@@ -52,7 +51,6 @@ function stockConverter(stock, usd, currency) {
   }, {});
   return final;
 }
-//TODO: Handle no data found
 const resolvers = {
   Query: {
     getStock: async (_, { symbol, date, currency }) => {
@@ -62,14 +60,10 @@ const resolvers = {
             "worldTradingDataAPIKey"
           )}`
         )
-        .then(response => {
-          if (!reponse.data.message) {
-            return response.data;
-          } else
-            throw new Error(`No data that found on ${symbol} stock in ${date}`);
-        })
+        .then(response => response.data)
         .catch(e => new Error(e));
 
+      //Handle data not existing on a certain date
       if (data.message) {
         throw new Error(`No data that found on ${symbol} stock in ${date}`);
       } else {
@@ -78,8 +72,7 @@ const resolvers = {
         data[symbol] = stockConverter(data[symbol], usd, selectedCurr);
         return data;
       }
-    },
-    hello: _ => "Hello"
+    }
   }
 };
 
