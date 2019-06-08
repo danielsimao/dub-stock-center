@@ -108,7 +108,10 @@ const StockCenter = props => {
                       <DropdownMenu>
                         <Calendar
                           activeStartDate={date}
-                          onChange={date => setDate(date)}
+                          onChange={date => {
+                            setDate(date);
+                            toggle(!isOpen);
+                          }}
                         />{" "}
                       </DropdownMenu>
                     </InputGroupButtonDropdown>
@@ -122,7 +125,7 @@ const StockCenter = props => {
                   <Input
                     id="stock"
                     placeholder={symbol}
-                    onChange={e => setSymbol(e)}
+                    onChange={e => setSymbol(e.target.value)}
                   />
                 </FormGroup>
                 <Button type="submit" className="mt-4">
@@ -153,7 +156,6 @@ const StockCenter = props => {
                     }}
                   >
                     {" "}
-                    {console.log(data.getStock[symbol])}
                     <h6
                       style={{ fontWeight: 20, color: "grey" }}
                     >{`NASDAQ: ${symbol}`}</h6>
@@ -169,7 +171,7 @@ const StockCenter = props => {
                           marginLeft: 4
                         }}
                       >
-                        USD
+                        {search.currency}
                       </span>
                     </h2>
                     <span style={{ marginTop: 0 }}>
