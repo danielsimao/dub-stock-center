@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const User = require("../../models/User");
 const config = require("config");
 const jwt = require("jsonwebtoken");
+const auth = require("../../middleware/auth");
 
 //@route POST api/users
 //@desc Register new user
@@ -44,6 +45,19 @@ router.post("/", (req, res) => {
       });
     });
   });
+});
+
+router.post("/favorites", auth, (req, res) => {
+  const { favorites } = req.body;
+
+  const { id } = req.user;
+
+  User.findOne({ _id: id })
+    .then(user => {
+      user.favorites = favorites;
+      user.save().then(user => res.send(user));
+    })
+    .catch(e => res.send(e));
 });
 
 module.exports = router;
