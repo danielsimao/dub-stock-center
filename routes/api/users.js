@@ -47,6 +47,14 @@ router.post("/", (req, res) => {
   });
 });
 
+router.get("/favorites", auth, (req, res) => {
+  const { id } = req.user;
+
+  User.findOne({ _id: id })
+    .then(user => res.send(user.favorites))
+    .catch(e => res.send(e));
+});
+
 router.post("/favorites", auth, (req, res) => {
   const { favorites } = req.body;
 
