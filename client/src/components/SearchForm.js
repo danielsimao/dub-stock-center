@@ -40,7 +40,7 @@ const SearchForm = props => {
   }, [currencies, props]);
 
   return (
-    <Form onSubmit={searchHandler} style={{ justifyContent: "center" }} inline>
+    <Form onSubmit={searchHandler} inline>
       {" "}
       <FormGroup className="mb-2 mr-sm-4 mb-sm-0 mt-4">
         <Label for="exampleCustomSelect" className="mr-sm-2">

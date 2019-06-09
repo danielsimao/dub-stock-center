@@ -5,6 +5,7 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import SearchForm from "./SearchForm";
 import SelectedStock from "./SelectedStock";
+import FavoritesStocks from "./FavoritesStocks";
 
 const StockCenter = () => {
   const [search, setSearch] = useState({
@@ -31,44 +32,48 @@ const StockCenter = () => {
       }}
     >
       {({ loading, error, data, refetch }) => {
-        console.log(data);
         return (
           <div>
             <Container>
-              <SearchForm setSearch={setSearch} refetch={refetch} />
+              <h3 className="text-muted">Search Stock</h3>
+              <div className="border-top">
+                <SearchForm setSearch={setSearch} refetch={refetch} />
 
-              {error ? (
-                <Alert
-                  style={{
-                    margin: "auto",
-                    marginTop: "10rem",
-                    padding: 10,
-                    textAlign: "center"
-                  }}
-                  color="warning"
-                >
-                  {error.message.split(":")[1]}
-                </Alert>
-              ) : !loading ? (
-                <SelectedStock
-                  close={data.Stock.close}
-                  currency={search.currency}
-                  date={search.date}
-                  symbol={search.symbol}
-                />
-              ) : (
-                <div
-                  style={{
-                    margin: "auto",
-                    marginTop: "10rem",
-                    padding: 10,
-                    textAlign: "center"
-                  }}
-                >
-                  {" "}
-                  <Spinner color="secondary" />
-                </div>
-              )}
+                {error ? (
+                  <Alert
+                    style={{
+                      margin: "7rem auto",
+                      textAlign: "center",
+                      width: "50%"
+                    }}
+                    color="warning"
+                  >
+                    {error.message.split(":")[1]}
+                  </Alert>
+                ) : !loading ? (
+                  <SelectedStock
+                    close={data.Stock.close}
+                    currency={search.currency}
+                    date={search.date}
+                    symbol={search.symbol}
+                  />
+                ) : (
+                  <div
+                    style={{
+                      margin: "7rem auto",
+                      textAlign: "center"
+                    }}
+                  >
+                    {" "}
+                    <Spinner color="secondary" />
+                  </div>
+                )}
+              </div>
+
+              <h3 className="text-muted">Your Favorites</h3>
+              <div className="border-top">
+                <FavoritesStocks />
+              </div>
             </Container>
           </div>
         );

@@ -8,7 +8,6 @@ const SelectedStock = ({ symbol, close, currency, date }) => {
       style={{
         margin: "auto",
         width: "200px",
-        marginTop: "10rem",
         padding: 10
       }}
     >
