@@ -34,9 +34,14 @@ const FavoritesStocks = () => {
       {stocks.map(({ symbol, close, currency, date }, id) => (
         <Card key={id} style={{ marginTop: "2rem" }}>
           <CardBody>
-            {console.log(stocks)}
             <CardTitle>
-              <Button onClick={() => closeHandler(id)} close />
+              <Button
+                onClick={() => closeHandler(id)}
+                close
+                aria-label="Cancel"
+              >
+                <span aria-hidden>&ndash;</span>
+              </Button>
             </CardTitle>{" "}
             <div style={{ padding: "1rem" }}>
               <h6
