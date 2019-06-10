@@ -56,13 +56,13 @@ router.get("/favorites", auth, (req, res) => {
 });
 
 router.post("/favorites", auth, (req, res) => {
-  const { favorites } = req.body;
+  const { favStocks } = req.body;
 
   const { id } = req.user;
 
   User.findOne({ _id: id })
     .then(user => {
-      user.favorites = favorites;
+      user.favorites = favStocks;
       user.save().then(user => res.send(user));
     })
     .catch(e => res.send(e));

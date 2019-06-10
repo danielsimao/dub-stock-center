@@ -15,6 +15,7 @@ const typeDefs = `
 
   type Query {
     Stock(symbol: String, date: String, currency: String): Stock
+    Stocks(symbol: [String], date: String, currency: String): [Stock]
   }
 `;
 
@@ -46,6 +47,32 @@ const resolvers = {
       const data = await axios
         .get(
           `https://api.worldtradingdata.com/api/v1/history_multi_single_day?symbol=${symbol}&date=${date}&api_token=${config.get(
+            "worldTradingDataAPIKey"
+          )}`
+        )
+        .then(response => response.data)
+        .catch(e => new Error(e));
+
+      if (data.Message) {
+        throw new Error(`No data that found on ${symbol} stock in ${date}`);
+      } else {
+        const { usd, selectedCurr } = await getCurrencyRates(currency);
+        const { data: stock } = data;
+
+        stock[symbol] = stockConverter(stock[symbol], usd, selectedCurr);
+
+        return data.data[symbol];
+      }
+    },
+    Stocks: async (_, { symbol, date, currency }) => {
+      if (!symbol.length)
+        throw Error("There are no favorites stocks to be displayed");
+
+      const data = await axios
+        .get(
+          `https://api.worldtradingdata.com/api/v1/history_multi_single_day?symbol=${
+            symbol[0]
+          },${symbol[1] ? symbol[1] : ""}&date=${date}&api_token=${config.get(
             "worldTradingDataAPIKey"
           )}`
         )

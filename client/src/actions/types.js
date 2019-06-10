@@ -12,5 +12,4 @@ export const GET_ERRORS = "GET_ERRORS";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const GET_FAV_STOCKS = "GET_FAV_STOCKS";
 export const FAV_STOCKS_LOADING = "FAV_STOCKS_LOADING";
-export const ADD_FAV_STOCK = "ADD_FAV_STOCK";
-export const DELETE_FAV_STOCK = "DELETE_FAV_STOCK";
+export const UPDATE_FAV_STOCKS = "UPDATE_FAV_STOCKS";

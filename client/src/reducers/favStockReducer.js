@@ -1,7 +1,6 @@
 import {
   GET_FAV_STOCKS,
-  ADD_FAV_STOCK,
-  DELETE_FAV_STOCK,
+  UPDATE_FAV_STOCKS,
   FAV_STOCKS_LOADING
 } from "../actions/types";
 
@@ -18,11 +17,10 @@ export default function(state = initialState, action) {
         favStocks: action.payload,
         loading: false
       };
-
     case UPDATE_FAV_STOCKS: {
       return {
         ...state,
-        favStocks: state.favStocks.splice(action.payload, 1),
+        favStocks: action.payload,
         loading: false
       };
     }

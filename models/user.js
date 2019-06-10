@@ -9,7 +9,11 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  favorites: { type: [String], required: false, maxlength: 3 }
+  favorites: {
+    type: [{ currency: String, stock: String }],
+    required: false,
+    maxlength: 4
+  }
 });
 
 module.exports = User = mongoose.model("user", UserSchema);
