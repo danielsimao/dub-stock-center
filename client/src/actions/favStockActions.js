@@ -1,17 +1,17 @@
 import axios from "axios";
 import {
   GET_FAV_STOCKS,
-  UPDATE_FAV_STOCK,
+  UPDATE_FAV_STOCKS,
   FAV_STOCKS_LOADING,
   AUTH_ERROR
 } from "./types";
 import { returnErrors } from "./errorActions";
 import { tokenConfig } from "./authActions";
 
-export const getFavStock = () => (getState, dispatch) => {
+export const getFavStock = () => (dispatch, getState) => {
   dispatch(setFavoriteStocks());
   axios
-    .get("/api/user/favorites", tokenConfig(getState))
+    .get("/api/users/favorites", tokenConfig(getState))
     .then(res =>
       dispatch({
         type: GET_FAV_STOCKS,
@@ -31,7 +31,7 @@ export const updateFavStock = favStocks => (dispatch, getState) => {
     .post("/api/user/favorites", favStocks, tokenConfig(getState))
     .then(res =>
       dispatch({
-        type: UPDATE_FAV_STOCK,
+        type: UPDATE_FAV_STOCKS,
         payload: res.data
       })
     )

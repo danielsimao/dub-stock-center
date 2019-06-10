@@ -10,7 +10,7 @@ const UserSchema = new Schema({
     default: Date.now
   },
   favorites: {
-    type: [{ currency: String, stock: String }],
+    type: [{ currency: String, symbol: String }],
     required: false,
     maxlength: 4
   }

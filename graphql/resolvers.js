@@ -45,9 +45,10 @@ module.exports = {
 
         const stocks = await stocksCurr.map(stockCurr =>
           getCurrencyRates(stockCurr.currency).then(obj => {
-            const { symbol } = stockCurr;
+            const { symbol, currency } = stockCurr;
             return {
               symbol,
+              currency,
               ...stockConverter(stock[symbol], obj.usd, obj.selectedCurr)
             };
           })

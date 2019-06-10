@@ -49,9 +49,8 @@ router.post("/", (req, res) => {
 
 router.get("/favorites", auth, (req, res) => {
   const { id } = req.user;
-
   User.findOne({ _id: id })
-    .then(user => res.send(user.favorites))
+    .then(user => res.json(user.favorites))
     .catch(e => res.send(e));
 });
 
@@ -63,7 +62,7 @@ router.post("/favorites", auth, (req, res) => {
   User.findOne({ _id: id })
     .then(user => {
       user.favorites = favStocks;
-      user.save().then(user => res.send(user));
+      user.save().then(user => res.json(user.favorites));
     })
     .catch(e => res.send(e));
 });
