@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { Container, Alert, Spinner } from "reactstrap";
 import { format } from "date-fns";
 import { Query } from "react-apollo";
+import { connect } from "react-redux";
 import gql from "graphql-tag";
 import SearchForm from "./SearchForm";
 import SelectedStock from "./SelectedStock";
 import FavoritesStocks from "./FavoritesStocks";
 
-const StockCenter = () => {
+const StockCenter = ({ isAuthenticated }) => {
   const [search, setSearch] = useState({
     currency: "AED",
     date: new Date(),
@@ -69,11 +70,14 @@ const StockCenter = () => {
                   </div>
                 )}
               </div>
-
-              <h3 className="text-muted">Your Favorites</h3>
-              <div className="border-top">
-                <FavoritesStocks />
-              </div>
+              {isAuthenticated && (
+                <>
+                  <h3 className="text-muted">Your Favorites</h3>
+                  <div className="border-top">
+                    <FavoritesStocks />
+                  </div>
+                </>
+              )}
             </Container>
           </div>
         );
@@ -82,4 +86,11 @@ const StockCenter = () => {
   );
 };
 
-export default StockCenter;
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(
+  mapStateToProps,
+  null
+)(StockCenter);

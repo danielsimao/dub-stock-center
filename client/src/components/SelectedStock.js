@@ -4,7 +4,14 @@ import { format } from "date-fns";
 import { connect } from "react-redux";
 import { updateFavStock } from "../actions/favStockActions";
 
-const SelectedStock = ({ symbol, close, currency, date, updateFavStock }) => {
+const SelectedStock = ({
+  symbol,
+  close,
+  currency,
+  date,
+  updateFavStock,
+  isAuthenticated
+}) => {
   const addHandler = () => updateFavStock({ symbol, currency });
 
   return (
@@ -12,10 +19,14 @@ const SelectedStock = ({ symbol, close, currency, date, updateFavStock }) => {
       <Card style={{ marginTop: "2rem" }}>
         <CardBody>
           <CardTitle>
-            <Button onClick={addHandler} close aria-label="Add">
-              {" "}
-              <span aria-hidden>+</span>
-            </Button>
+            {isAuthenticated && (
+              <>
+                <Button onClick={addHandler} close aria-label="Add">
+                  {" "}
+                  <span aria-hidden>+</span>
+                </Button>
+              </>
+            )}
           </CardTitle>{" "}
           <div style={{ padding: "1rem" }}>
             <h6
@@ -48,7 +59,8 @@ const SelectedStock = ({ symbol, close, currency, date, updateFavStock }) => {
 };
 
 const mapStateToProps = state => ({
-  favStock: state.favStock
+  favStock: state.favStock,
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 export default connect(

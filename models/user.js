@@ -12,7 +12,7 @@ const UserSchema = new Schema({
   favorites: {
     type: [{ currency: String, symbol: String }],
     required: false,
-    maxlength: 4
+    maxlength: 2
   }
 });
 
