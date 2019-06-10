@@ -55,16 +55,25 @@ router.get("/favorites", auth, (req, res) => {
 });
 
 router.post("/favorites", auth, (req, res) => {
-  const { favStocks } = req.body;
+  const favStock = req.body;
 
   const { id } = req.user;
-
   User.findOne({ _id: id })
     .then(user => {
-      user.favorites = favStocks;
+      user.favorites.push(favStock);
       user.save().then(user => res.json(user.favorites));
     })
     .catch(e => res.send(e));
+});
+
+router.delete("/favorites", auth, (req, res) => {
+  const { favStock } = req.body;
+
+  console.log(favStock);
+
+  Item.findById(req.params.id)
+    .then(item => item.remove().then(() => res.json({ sucess: true })))
+    .catch(err => res.status(404).json({ sucess: false }));
 });
 
 module.exports = router;

@@ -9,6 +9,7 @@ type Stock {
 }
 
 input stocksCurr {
+  _id: ID
   symbol: String
   currency: String
 }

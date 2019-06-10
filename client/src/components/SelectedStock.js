@@ -1,9 +1,11 @@
 import React from "react";
 import { Card, CardBody, CardTitle, Button } from "reactstrap";
 import { format } from "date-fns";
+import { connect } from "react-redux";
+import { updateFavStock } from "../actions/favStockActions";
 
-const SelectedStock = ({ symbol, close, currency, date }) => {
-  const addHandler = () => {};
+const SelectedStock = ({ symbol, close, currency, date, updateFavStock }) => {
+  const addHandler = () => updateFavStock({ symbol, currency });
 
   return (
     <div className="d-flex justify-content-around flex-wrap">
@@ -45,4 +47,11 @@ const SelectedStock = ({ symbol, close, currency, date }) => {
   );
 };
 
-export default SelectedStock;
+const mapStateToProps = state => ({
+  favStock: state.favStock
+});
+
+export default connect(
+  mapStateToProps,
+  { updateFavStock }
+)(SelectedStock);

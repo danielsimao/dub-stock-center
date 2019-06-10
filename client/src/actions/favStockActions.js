@@ -26,9 +26,9 @@ export const getFavStock = () => (dispatch, getState) => {
     });
 };
 
-export const updateFavStock = favStocks => (dispatch, getState) => {
+export const updateFavStock = favStock => (dispatch, getState) => {
   axios
-    .post("/api/user/favorites", favStocks, tokenConfig(getState))
+    .post("/api/users/favorites", favStock, tokenConfig(getState))
     .then(res =>
       dispatch({
         type: UPDATE_FAV_STOCKS,
