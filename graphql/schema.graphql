@@ -1,0 +1,18 @@
+type Stock {
+  symbol: String
+  open: Float!
+  close: Float!
+  high: Float!
+  low: Float!
+  volume: Float!
+}
+
+input stocksCurr {
+  symbol: String
+  currency: String
+}
+
+type Query {
+  Stock(symbol: String, date: String, currency: String): Stock
+  Stocks(stocksCurr: [stocksCurr]!, date: String): [Stock]
+}
