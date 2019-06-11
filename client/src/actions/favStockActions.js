@@ -42,6 +42,7 @@ export const addFavStock = favStock => (dispatch, getState) => {
 };
 
 export const deleteFavStock = id => (dispatch, getState) => {
+  console.log(id);
   axios
     .delete(`/api/users/favorites/${id}`, tokenConfig(getState))
     .then(res =>

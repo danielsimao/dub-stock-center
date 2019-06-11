@@ -1,4 +1,5 @@
 type Stock {
+  _id: ID
   symbol: String
   currency: String
   open: Float!

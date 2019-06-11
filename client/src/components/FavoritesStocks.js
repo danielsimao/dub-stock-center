@@ -4,7 +4,7 @@ import { format } from "date-fns";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import { connect } from "react-redux";
-import { getFavStock } from "../actions/favStockActions";
+import { getFavStock, deleteFavStock } from "../actions/favStockActions";
 
 const FavoritesStocks = props => {
   const [stocks, setStocks] = useState(null);
@@ -23,9 +23,8 @@ const FavoritesStocks = props => {
   }, [props, stocks]);
 
   const closeHandler = id => {
-    const newStocks = [...stocks];
-    newStocks.splice(id, 1);
-    setStocks(newStocks);
+    props.deleteFavStock(id);
+    props.getFavStock();
   };
   return (
     <Query
@@ -54,12 +53,13 @@ const FavoritesStocks = props => {
         return (
           <div className="d-flex justify-content-around flex-wrap">
             {favStocks &&
-              data.Stocks.map(({ symbol, close, currency }, id) => (
+              data.Stocks.map(({ _id, symbol, close, currency }, id) => (
                 <Card key={id} style={{ marginTop: "2rem" }}>
                   <CardBody>
+                    {console.log(favStocks)}
                     <CardTitle>
                       <Button
-                        onClick={() => closeHandler(id)}
+                        onClick={() => closeHandler(_id)}
                         close
                         aria-label="Cancel"
                       >
@@ -103,6 +103,7 @@ const FavoritesStocks = props => {
 const STOCKS_QUERY = gql`
   query STOCKS_QUERY($stocksCurr: [stocksCurr]!, $date: String) {
     Stocks(stocksCurr: $stocksCurr, date: $date) {
+      _id
       symbol
       currency
       close
@@ -116,5 +117,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getFavStock }
+  { getFavStock, deleteFavStock }
 )(FavoritesStocks);

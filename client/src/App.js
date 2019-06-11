@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import AppNavbar from "./components/AppNavbar";
-
 import StockCenter from "./components/StockCenter";
 import { Container } from "reactstrap";
 import { loadUser } from "./actions/authActions";
