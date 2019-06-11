@@ -12,8 +12,9 @@ const SelectedStock = ({
   addFavStock,
   isAuthenticated
 }) => {
-  const addHandler = () => addFavStock({ symbol, currency });
-
+  const addHandler = () => {
+    addFavStock({ symbol, currency });
+  };
   return (
     <div className="d-flex justify-content-around flex-wrap">
       <Card style={{ marginTop: "2rem" }}>

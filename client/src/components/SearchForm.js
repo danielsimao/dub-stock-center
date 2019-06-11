@@ -20,12 +20,12 @@ const SearchForm = props => {
   const [isOpen, toggle] = useState(false);
   const [currencies, setCurrencies] = useState(null);
   const [currency, setCurrency] = useState("AED");
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new Date(2019, 1, 6));
   const [symbol, setSymbol] = useState("AMZN");
 
   const searchHandler = e => {
     e.preventDefault();
-    props.setSearch({ currency, date, symbol: symbol });
+    props.refetch({ currency, date: format(date, "YYYY-MM-DD"), symbol });
   };
 
   useEffect(() => setCurrencies(props.currency.currency.currencies), [

@@ -2,6 +2,7 @@ type Stock {
   _id: ID
   symbol: String
   currency: String
+  date: String
   open: Float!
   close: Float!
   high: Float!

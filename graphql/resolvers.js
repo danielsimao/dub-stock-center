@@ -20,7 +20,12 @@ module.exports = {
         const { usd, selectedCurr } = await getCurrencyRates(currency);
         const { data: stock } = data;
 
-        return { symbol, ...stockConverter(stock[symbol], usd, selectedCurr) };
+        return {
+          symbol,
+          currency,
+          date,
+          ...stockConverter(stock[symbol], usd, selectedCurr)
+        };
       }
     },
     Stocks: async (_, { stocksCurr, date }) => {
