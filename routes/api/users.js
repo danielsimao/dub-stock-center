@@ -66,13 +66,13 @@ router.post("/favorites", auth, (req, res) => {
     .catch(e => res.send(e));
 });
 
-router.delete("/favorites", auth, (req, res) => {
-  const { favStock } = req.body;
-
-  console.log(favStock);
-
-  Item.findById(req.params.id)
-    .then(item => item.remove().then(() => res.json({ sucess: true })))
+router.delete("/favorites/:id", auth, (req, res) => {
+  const { id } = req.user;
+  User.findOne({ _id: id })
+    .then(user => {
+      user.favorites = user.favorites.filter(obj => obj._id != req.params.id);
+      user.save().then(user => res.json(user.favorites));
+    })
     .catch(err => res.status(404).json({ sucess: false }));
 });
 

@@ -1,7 +1,8 @@
 import axios from "axios";
 import {
   GET_FAV_STOCKS,
-  UPDATE_FAV_STOCKS,
+  ADD_FAV_STOCKS,
+  DELETE_FAV_STOCKS,
   FAV_STOCKS_LOADING,
   AUTH_ERROR
 } from "./types";
@@ -26,12 +27,26 @@ export const getFavStock = () => (dispatch, getState) => {
     });
 };
 
-export const updateFavStock = favStock => (dispatch, getState) => {
+export const addFavStock = favStock => (dispatch, getState) => {
   axios
     .post("/api/users/favorites", favStock, tokenConfig(getState))
     .then(res =>
       dispatch({
-        type: UPDATE_FAV_STOCKS,
+        type: ADD_FAV_STOCKS,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+
+export const deleteFavStock = id => (dispatch, getState) => {
+  axios
+    .delete(`/api/users/favorites/${id}`, tokenConfig(getState))
+    .then(res =>
+      dispatch({
+        type: DELETE_FAV_STOCKS,
         payload: res.data
       })
     )

@@ -2,17 +2,17 @@ import React from "react";
 import { Card, CardBody, CardTitle, Button } from "reactstrap";
 import { format } from "date-fns";
 import { connect } from "react-redux";
-import { updateFavStock } from "../actions/favStockActions";
+import { addFavStock } from "../actions/favStockActions";
 
 const SelectedStock = ({
   symbol,
   close,
   currency,
   date,
-  updateFavStock,
+  addFavStock,
   isAuthenticated
 }) => {
-  const addHandler = () => updateFavStock({ symbol, currency });
+  const addHandler = () => addFavStock({ symbol, currency });
 
   return (
     <div className="d-flex justify-content-around flex-wrap">
@@ -65,5 +65,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { updateFavStock }
+  { addFavStock }
 )(SelectedStock);

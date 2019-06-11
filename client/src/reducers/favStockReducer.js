@@ -1,6 +1,7 @@
 import {
   GET_FAV_STOCKS,
-  UPDATE_FAV_STOCKS,
+  ADD_FAV_STOCKS,
+  DELETE_FAV_STOCKS,
   FAV_STOCKS_LOADING
 } from "../actions/types";
 
@@ -17,7 +18,8 @@ export default function(state = initialState, action) {
         favStocks: action.payload,
         loading: false
       };
-    case UPDATE_FAV_STOCKS: {
+    case DELETE_FAV_STOCKS:
+    case ADD_FAV_STOCKS: {
       return {
         ...state,
         favStocks: action.payload,
