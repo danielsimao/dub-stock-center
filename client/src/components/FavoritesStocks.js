@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, CardBody, CardTitle, Button, Spinner } from "reactstrap";
+import { Card, CardBody, CardTitle, Button, Spinner, Alert } from "reactstrap";
 import { format } from "date-fns";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
@@ -30,11 +30,25 @@ const FavoritesStocks = props => {
     <Query
       query={STOCKS_QUERY}
       variables={{
-        stocksCurr: stocks ? stocks : [],
+        stocksCurr: stocks,
         date
       }}
     >
-      {({ loading, error, data, refetch }) => {
+      {({ loading, error, data }) => {
+        if (!stocks || !stocks.length) {
+          return (
+            <div
+              style={{
+                margin: "7rem auto",
+                textAlign: "center",
+                width: "50%"
+              }}
+            >
+              <Alert color="secondary">You have no Favorite Stocks</Alert>
+            </div>
+          );
+        }
+
         if (loading || !data) {
           return (
             <div
