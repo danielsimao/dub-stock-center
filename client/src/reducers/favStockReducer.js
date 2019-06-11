@@ -2,7 +2,8 @@ import {
   GET_FAV_STOCKS,
   ADD_FAV_STOCKS,
   DELETE_FAV_STOCKS,
-  FAV_STOCKS_LOADING
+  FAV_STOCKS_LOADING,
+  ADD_FAV_STOCKS_FAIL
 } from "../actions/types";
 
 const initialState = {
@@ -31,6 +32,7 @@ export default function(state = initialState, action) {
         ...state,
         loading: true
       };
+    case ADD_FAV_STOCKS_FAIL:
     default:
       return state;
   }

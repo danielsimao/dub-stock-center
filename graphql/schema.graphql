@@ -18,5 +18,5 @@ input stocksCurr {
 
 type Query {
   Stock(symbol: String, date: String, currency: String): Stock
-  Stocks(stocksCurr: [stocksCurr]!, date: String): [Stock]
+  Stocks(stocksCurr: [stocksCurr], date: String): [Stock]
 }

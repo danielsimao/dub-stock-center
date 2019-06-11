@@ -4,6 +4,7 @@ import {
   ADD_FAV_STOCKS,
   DELETE_FAV_STOCKS,
   FAV_STOCKS_LOADING,
+  ADD_FAV_STOCKS_FAIL,
   AUTH_ERROR
 } from "./types";
 import { returnErrors } from "./errorActions";
@@ -37,12 +38,18 @@ export const addFavStock = favStock => (dispatch, getState) => {
       })
     )
     .catch(err =>
-      dispatch(returnErrors(err.response.data, err.response.status))
+      dispatch(
+        returnErrors(
+          err.response.data,
+          err.response.status,
+          "ADD_FAV_STOCKS_FAIL"
+        )
+      )
     );
+  dispatch({ type: ADD_FAV_STOCKS_FAIL });
 };
 
 export const deleteFavStock = id => (dispatch, getState) => {
-  console.log(id);
   axios
     .delete(`/api/users/favorites/${id}`, tokenConfig(getState))
     .then(res =>

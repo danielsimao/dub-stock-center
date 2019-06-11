@@ -60,8 +60,10 @@ router.post("/favorites", auth, (req, res) => {
   const { id } = req.user;
   User.findOne({ _id: id })
     .then(user => {
-      user.favorites.push(favStock);
-      user.save().then(user => res.json(user.favorites));
+      if (user.favorites.length < 2) {
+        user.favorites.push(favStock);
+        user.save().then(user => res.json(user.favorites));
+      } else res.status(404).json({ msg: "Max. 2 Favorites Stocks" });
     })
     .catch(e => res.send(e));
 });
