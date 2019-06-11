@@ -5,11 +5,13 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import { connect } from "react-redux";
 import { getFavStock, deleteFavStock } from "../actions/favStockActions";
+import ConfirmationModal from "./ConfirmationModal";
 
 const FavoritesStocks = props => {
   const [stocks, setStocks] = useState(null);
   const [date, setDate] = useState("2019-02-06");
   const [favStocks, setFavStocks] = useState(null);
+  const [isOpen, toggle] = useState(false);
 
   useEffect(() => setStocks(props.favStock.favStocks), [
     props.favStock.favStocks
@@ -22,7 +24,8 @@ const FavoritesStocks = props => {
     if (!props.favStock.loading && !stocks) fetchFavStock();
   }, [props, stocks]);
 
-  const closeHandler = id => {
+  const deleteHandler = id => {
+    toggle(!isOpen);
     props.deleteFavStock(id);
     props.getFavStock();
   };
@@ -70,13 +73,19 @@ const FavoritesStocks = props => {
               data.Stocks.map(({ _id, symbol, close, currency }, id) => (
                 <Card key={id} style={{ marginTop: "2rem" }}>
                   <CardBody>
-                    {console.log(favStocks)}
                     <CardTitle>
                       <Button
-                        onClick={() => closeHandler(_id)}
+                        onClick={() => toggle(!isOpen)}
                         close
                         aria-label="Cancel"
                       >
+                        <ConfirmationModal
+                          symbol={symbol}
+                          currency={currency}
+                          isOpen={isOpen}
+                          toggle={toggle}
+                          deleteHandler={() => deleteHandler(_id)}
+                        />
                         <span aria-hidden>&ndash;</span>
                       </Button>
                     </CardTitle>{" "}
@@ -115,7 +124,7 @@ const FavoritesStocks = props => {
 };
 
 const STOCKS_QUERY = gql`
-  query STOCKS_QUERY($stocksCurr: [stocksCurr]!, $date: String) {
+  query STOCKS_QUERY($stocksCurr: [stocksCurr], $date: String) {
     Stocks(stocksCurr: $stocksCurr, date: $date) {
       _id
       symbol

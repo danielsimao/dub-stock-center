@@ -30,7 +30,7 @@ module.exports = {
     },
     Stocks: async (_, { stocksCurr, date }) => {
       if (!stocksCurr.length)
-        throw Error("There are no favorites stocks to be displayed");
+        return Error("There are no favorites stocks to be displayed");
       const symbolQuery = stocksCurr
         .map(stockCurr => stockCurr.symbol)
         .join(",");
