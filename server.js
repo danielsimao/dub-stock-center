@@ -8,8 +8,7 @@ const app = express();
 
 app.use(express.json());
 
-const db =
-  "mongodb+srv://luna123:1234@cluster0-vixcw.mongodb.net/test?retryWrites=true";
+const db = config.get("mongoURI");
 
 mongoose
   .connect(db, { useNewUrlParser: true, useCreateIndex: true })
