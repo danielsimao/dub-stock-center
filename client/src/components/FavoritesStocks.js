@@ -13,11 +13,17 @@ const FavoritesStocks = props => {
   const [stocks, setStocks] = useState(null);
   const [date, setDate] = useState("2019-02-06");
   const [isOpen, toggle] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => setIsLoading(props.favStock.loading || props.data.loading), [
+    props.data.loading,
+    props.favStock.loading
+  ]);
 
   useEffect(() => {
     setStocks(props.favStock.favStocks);
     if (!isEqual(props.data.variables.stocksCurr, stocks)) {
-      props.data.refetch({ stocksCurr: stocks, date });
+      props.data.refetch({ stocksCurr: props.favStock.favStocks, date });
     }
   }, [date, props.data, props.favStock.favStocks, stocks]);
 
@@ -27,6 +33,20 @@ const FavoritesStocks = props => {
     }
     if (!props.favStock.loading && !stocks) fetchFavStock();
   }, [props, stocks]);
+
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          margin: "7rem auto",
+          textAlign: "center"
+        }}
+      >
+        {" "}
+        <Spinner color="secondary" />
+      </div>
+    );
+  }
 
   if (props.data.error) {
     return (
@@ -38,20 +58,6 @@ const FavoritesStocks = props => {
           width: "50%"
         }}
       />
-    );
-  }
-
-  if (props.data.loading && !props.data) {
-    return (
-      <div
-        style={{
-          margin: "7rem auto",
-          textAlign: "center"
-        }}
-      >
-        {" "}
-        <Spinner color="secondary" />
-      </div>
     );
   }
 
