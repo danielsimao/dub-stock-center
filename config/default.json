@@ -1,0 +1,6 @@
+{
+  "mongoURI": "mongodb+srv://luna123:1234@cluster0-vixcw.mongodb.net/test?retryWrites=true",
+  "jwtSecret": "sl_myJwtSecret",
+  "fixerAPIKey": "d2955cbfaa2397be18782e31ae411566",
+  "worldTradingDataAPIKey": "KAgMctsvTYHsRQ5OLoN2r1BQWd0oMHYBY7DtP1AUsIeoGZA5Obpn61WRebbZ"
+}
