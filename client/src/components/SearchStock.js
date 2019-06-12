@@ -4,6 +4,7 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import SearchForm from "./SearchForm";
 import SelectedStock from "./SelectedStock";
+import ErrorMessage from "./ErrorMessage";
 
 const SearchStock = () => {
   const QUERY_STOCK = gql`
@@ -32,16 +33,14 @@ const SearchStock = () => {
             <SearchForm refetch={refetch} />
 
             {error ? (
-              <Alert
+              <ErrorMessage
+                error={error}
                 style={{
                   margin: "7rem auto",
                   textAlign: "center",
                   width: "50%"
                 }}
-                color="warning"
-              >
-                {error.message.split(":")[1]}
-              </Alert>
+              />
             ) : !loading ? (
               <SelectedStock
                 close={data.Stock.close}

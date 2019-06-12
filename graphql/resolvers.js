@@ -15,7 +15,9 @@ module.exports = {
         .catch(e => new Error(e));
 
       if (data.Message) {
-        throw new Error(`No data that found on ${symbol} stock in ${date}`);
+        throw new Error(
+          `Symbol "${symbol}" doesn't exist or no data found at ${date}`
+        );
       } else {
         const { usd, selectedCurr } = await getCurrencyRates(currency);
         const { data: stock } = data;
