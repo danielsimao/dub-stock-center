@@ -1,6 +1,6 @@
 {
   "mongoURI": ["MONGO_DB_URI"],
-  "jwtSecret": "sl_myJwtSecret",
+  "jwtSecret": ["JWT_SECRET"],
   "fixerAPIKey": ["fixer_API_Key"],
   "worldTradingDataAPIKey": ["worldTrading_Data_API_Key"]
 }
