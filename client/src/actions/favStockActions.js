@@ -37,16 +37,16 @@ export const addFavStock = favStock => (dispatch, getState) => {
         payload: res.data
       })
     )
-    .catch(err =>
+    .catch(err => {
       dispatch(
         returnErrors(
           err.response.data,
           err.response.status,
           "ADD_FAV_STOCKS_FAIL"
         )
-      )
-    );
-  dispatch({ type: ADD_FAV_STOCKS_FAIL });
+      );
+      dispatch({ type: ADD_FAV_STOCKS_FAIL });
+    });
 };
 
 export const deleteFavStock = id => (dispatch, getState) => {
@@ -55,7 +55,7 @@ export const deleteFavStock = id => (dispatch, getState) => {
     .then(res =>
       dispatch({
         type: DELETE_FAV_STOCKS,
-        payload: res.data
+        payload: id
       })
     )
     .catch(err =>

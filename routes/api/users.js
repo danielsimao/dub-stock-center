@@ -72,6 +72,7 @@ router.delete("/favorites/:id", auth, (req, res) => {
   const { id } = req.user;
   User.findOne({ _id: id })
     .then(user => {
+      console.log(req.params.id);
       user.favorites = user.favorites.filter(obj => obj._id != req.params.id);
       user.save().then(user => res.json(user.favorites));
     })

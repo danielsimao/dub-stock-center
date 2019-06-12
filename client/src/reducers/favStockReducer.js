@@ -19,7 +19,14 @@ export default function(state = initialState, action) {
         favStocks: action.payload,
         loading: false
       };
-    case DELETE_FAV_STOCKS:
+    case DELETE_FAV_STOCKS: {
+      return {
+        ...state,
+        favStocks: state.favStocks.filter(
+          favStock => favStock._id !== action.payload
+        )
+      };
+    }
     case ADD_FAV_STOCKS: {
       return {
         ...state,
