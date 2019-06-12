@@ -47,12 +47,20 @@ router.post("/", (req, res) => {
   });
 });
 
+//@route GET api/users/favorites
+//@desc Get favorites
+//@acess Private
+
 router.get("/favorites", auth, (req, res) => {
   const { id } = req.user;
   User.findOne({ _id: id })
     .then(user => res.json(user.favorites))
     .catch(e => res.send(e));
 });
+
+//@route POST api/users/favorites
+//@desc add favorite stock
+//@acess Private
 
 router.post("/favorites", auth, (req, res) => {
   const favStock = req.body;
@@ -67,6 +75,10 @@ router.post("/favorites", auth, (req, res) => {
     })
     .catch(e => res.send(e));
 });
+
+//@route DELETE api/users/favorites
+//@desc delete favorite stock
+//@acess Private
 
 router.delete("/favorites/:id", auth, (req, res) => {
   const { id } = req.user;
