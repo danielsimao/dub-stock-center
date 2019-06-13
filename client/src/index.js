@@ -9,7 +9,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { ApolloProvider } from "react-apollo";
 
 const client = new ApolloClient({
-  link: new HttpLink({ uri: `http://localhost:${process.env.PORT || 4000}/` }),
+  link: new HttpLink(),
   cache: new InMemoryCache()
 });
 
