@@ -1,3 +1,9 @@
+# StockCenter
+
+Deployed at Heroku: https://pacific-cliffs-22277.herokuapp.com/
+
+Note: In case search stops working, most likely is due to external APIs call limitations.
+
 # Hostelworld Code Challenge
 This page consists coding challenge for Software Engineer - Full Stack JavaScript role at Hostelworld.
 
@@ -54,6 +60,7 @@ You will be scored on:
 - User authentication.
 - Save and view Favorites
 - History of operations
+
 
 
 
