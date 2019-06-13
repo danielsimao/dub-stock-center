@@ -30,6 +30,6 @@ if (process.env.NODE_ENV === "production") {
 
 graphqlServer.express.use(app);
 
-graphqlServer.start({ port: process.env.PORT || 4000 }, ({ port }) =>
-  console.log(`GraphQL Server is running on localhost:${port}`)
+graphqlServer.start({ port: process.env.PORT || 4000 }, ({ url }) =>
+  console.log(`GraphQL Server is running on ${url}`)
 );
