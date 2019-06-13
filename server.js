@@ -20,16 +20,14 @@ app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/stock", require("./routes/api/stock"));
 app.use("/api/currency", require("./routes/api/currency"));
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
+app.use(express.static("public"));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-  });
-}
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "public", "index.html"));
+});
 
 graphqlServer.express.use(app);
 
-graphqlServer.start({ port: process.env.PORT || 4000 }, ({ url }) =>
-  console.log(`GraphQL Server is running on ${url}`)
+graphqlServer.start({ port: process.env.PORT || 4000 }, ({ port }) =>
+  console.log(`GraphQL Server is running on ${port}`)
 );
