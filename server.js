@@ -20,7 +20,6 @@ mongoose
 
 app.use("/api/users", require("./routes/api/users"));
 app.use("/api/auth", require("./routes/api/auth"));
-app.use("/api/stock", require("./routes/api/stock"));
 app.use("/api/currency", require("./routes/api/currency"));
 
 app.use(express.static("public"));

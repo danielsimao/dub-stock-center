@@ -8,14 +8,12 @@ const config = require("config");
 //@acess Public
 
 router.get("/symbols", (req, res) => {
-  axios
-    .get(
-      `http://data.fixer.io/api/symbols?access_key=${config.get("fixerAPIKey")}`
-    )
-    .then(response =>
-      res.send({ success: true, symbols: Object.keys(response.data.symbols) })
-    )
-    .catch(err => res.status(404).json({ success: false }));
+  try {
+    const symbols = require("./symbols.json");
+    res.send({ symbols: Object.keys(symbols) });
+  } catch (e) {
+    res.status(404).json({ success: false });
+  }
 });
 
 //@route GET api/currency
