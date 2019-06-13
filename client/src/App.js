@@ -6,6 +6,7 @@ import { loadUser } from "./actions/authActions";
 import { connect } from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import SideBar from "./components/SideBar";
 
 const App = ({ loadUser, auth }) => {
   const [mount, setMount] = useState(true);
@@ -21,13 +22,18 @@ const App = ({ loadUser, auth }) => {
   }, [auth.isAuthenticated, auth.isLoading, loadUser, mount]);
 
   return (
-    <div className="App">
+    <div id="App" className="App">
       {mount && (
         <>
-          <AppNavbar />
-          <Container>
-            <StockCenter />
-          </Container>
+          {auth.isAuthenticated && (
+            <SideBar pageWrapId={"page-wrap"} outerContainerId={"App"} />
+          )}
+          <div id="page-wrap">
+            <AppNavbar />
+            <Container>
+              <StockCenter />
+            </Container>
+          </div>
         </>
       )}
     </div>

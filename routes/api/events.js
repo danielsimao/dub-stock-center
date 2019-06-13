@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../../middleware/auth");
+const Event = require("../../models/event");
 
 //@route GET api/events
 //@desc Get events
@@ -9,7 +10,7 @@ const auth = require("../../middleware/auth");
 router.get("/", auth, (req, res) => {
   const { id } = req.user;
   Event.find({ user: id })
-    .sort({ date: -1 })
+    .sort({ timestamp: -1 })
     .limit(10)
     .then(events => res.json(events))
     .catch(e => res.send(e));
@@ -20,16 +21,15 @@ router.get("/", auth, (req, res) => {
 //@acess Private
 
 router.post("/", auth, (req, res) => {
-  const event = req.body;
+  const { eventType, timestamp, action } = req.body;
 
   const { id } = req.user;
-  User.findOne({ _id: id })
-    .then(user => {
-      if (user.favorites.length < 2) {
-        user.favorites.push(favStock);
-        user.save().then(user => res.json(user.favorites));
-      } else res.status(404).json({ msg: "Max. 2 Favorites Stocks" });
-    })
+
+  const newEvent = new Event({ eventType, timestamp, action, user: id });
+
+  newEvent
+    .save()
+    .then(event => res.json(event))
     .catch(e => res.send(e));
 });
 

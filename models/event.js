@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const EventSchema = new Schema({
   eventType: { type: String, require: true },
   timestamp: { type: Date, default: Date.now },
-  user: { type: ObjectId, require: true },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "user", require: true },
   action: { type: Object, require: true }
 });
 

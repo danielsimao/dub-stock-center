@@ -1,8 +1,6 @@
 import React from "react";
 import { Container } from "reactstrap";
-
 import { connect } from "react-redux";
-
 import FavoritesStocks from "./FavoritesStocks";
 import SearchStock from "./SearchStock";
 
