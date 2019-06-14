@@ -7,12 +7,16 @@ const Event = require("../../models/event");
 //@desc Get events
 //@acess Private
 
-router.get("/", auth, (req, res) => {
+router.get("/:itemCount", auth, (req, res) => {
   const { id } = req.user;
   Event.find({ user: id })
     .sort({ timestamp: -1 })
-    .limit(10)
-    .then(events => res.json(events))
+    .limit(req.params.itemCount ? parseInt(req.params.itemCount) : 10)
+    .then(events =>
+      Event.countDocuments().then(count => {
+        res.json({ events, count });
+      })
+    )
     .catch(e => res.send(e));
 });
 

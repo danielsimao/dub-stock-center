@@ -16,6 +16,7 @@
     "react-burger-menu": "^2.6.10",
     "react-calendar": "^2.19.0",
     "react-dom": "^16.8.6",
+    "react-infinite-scroll-component": "^4.5.2",
     "react-load-script": "^0.0.6",
     "react-redux": "^7.0.3",
     "react-scripts": "3.0.1",

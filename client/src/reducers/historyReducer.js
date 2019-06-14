@@ -8,6 +8,7 @@ import {
 
 const initialState = {
   history: [],
+  count: 0,
   loading: false
 };
 
@@ -16,13 +17,18 @@ export default function(state = initialState, action) {
     case GET_HISTORY:
       return {
         ...state,
-        history: action.payload,
+        history: action.payload.events,
+        count: action.payload.count,
         loading: false
       };
     case CREATE_EVENT: {
       return {
         ...state,
-        history: [action.payload, ...state.history],
+        history: () => {
+          state.history.pop();
+          return [action.payload, ...state.history];
+        },
+        count: state.count + 1,
         loading: false
       };
     }

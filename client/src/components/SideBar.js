@@ -50,10 +50,14 @@ const SideBar = props => {
 
   React.useEffect(() => {
     async function fetchHistory() {
-      await props.getHistory();
+      await props.getHistory(9);
     }
     if (!props.history.loading && !history) fetchHistory();
   }, [history, props]);
+
+  const fetchMoreData = () => {
+    props.getHistory(history.length + 5);
+  };
 
   return (
     <Menu
@@ -65,19 +69,28 @@ const SideBar = props => {
       isOpen={ctx.isMenuOpen}
       onStateChange={state => ctx.stateChangeHandler(state)}
     >
-      {history &&
-        history.map((event, id) => {
-          const { caption } = getEvent(event);
+      <>
+        {history &&
+          history.map((event, id) => {
+            const { caption } = getEvent(event);
 
-          return (
-            <div key={id}>
-              <span>{caption}</span>
-              <span style={{ fontSize: "small", marginLeft: "23px" }}>
-                {`${distanceInWordsToNow(event.timestamp)} ago`}{" "}
-              </span>
-            </div>
-          );
-        })}
+            return (
+              <div style={{ marginTop: 5 }} key={id}>
+                <span>{caption}</span>
+                <span style={{ fontSize: "small", marginLeft: "23px" }}>
+                  {`${distanceInWordsToNow(event.timestamp)} ago`}{" "}
+                </span>
+              </div>
+            );
+          })}
+        {props.history.history.length < props.history.count ? (
+          <Button style={{ width: "100%" }} onClick={fetchMoreData}>
+            Load More
+          </Button>
+        ) : (
+          <div style={{ width: "100%", textAlign: "center" }}>Finito</div>
+        )}
+      </>
     </Menu>
   );
 };

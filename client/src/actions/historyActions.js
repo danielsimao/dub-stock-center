@@ -9,10 +9,10 @@ import {
 import { returnErrors } from "./errorActions";
 import { tokenConfig } from "./authActions";
 
-export const getHistory = () => (dispatch, getState) => {
+export const getHistory = itemCount => (dispatch, getState) => {
   dispatch(setHistory());
   axios
-    .get("/api/events", tokenConfig(getState))
+    .get(`/api/events/${itemCount}`, tokenConfig(getState))
     .then(res =>
       dispatch({
         type: GET_HISTORY,
