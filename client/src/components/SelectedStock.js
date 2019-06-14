@@ -12,6 +12,7 @@ import { format } from "date-fns";
 import { connect } from "react-redux";
 import { addFavStock } from "../actions/favStockActions";
 import { clearErrors } from "../actions/errorActions";
+import { createEvent } from "../actions/historyActions";
 
 const SelectedStock = ({
   symbol,
@@ -21,7 +22,8 @@ const SelectedStock = ({
   addFavStock,
   isAuthenticated,
   error,
-  clearErrors
+  clearErrors,
+  createEvent
 }) => {
   const [msg, setMsg] = useState(null);
   const [isOpen, toogle] = useState(false);
@@ -37,6 +39,7 @@ const SelectedStock = ({
 
   const addHandler = () => {
     addFavStock({ symbol, currency });
+    createEvent({ eventType: "addFavorite", action: { symbol, currency } });
   };
 
   const closePopoverHandler = () => {
@@ -112,5 +115,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { addFavStock, clearErrors }
+  { addFavStock, clearErrors, createEvent }
 )(SelectedStock);

@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { deleteFavStock } from "../actions/favStockActions";
 import { connect } from "react-redux";
+import { createEvent } from "../actions/historyActions";
 
 const ConfirmationModal = ({
   isOpen,
@@ -9,7 +10,8 @@ const ConfirmationModal = ({
   currency,
   symbol,
   deleteFavStock,
-  id
+  id,
+  createEvent
 }) => {
   const deleteHandler = id => deleteFavStock(id);
 
@@ -31,6 +33,10 @@ const ConfirmationModal = ({
             onClick={() => {
               toggle(!isOpen);
               deleteHandler(id);
+              createEvent({
+                eventType: "removeFavorite",
+                action: { symbol, currency }
+              });
             }}
           >
             Delete
@@ -50,5 +56,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { deleteFavStock }
+  { deleteFavStock, createEvent }
 )(ConfirmationModal);

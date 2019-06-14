@@ -5,6 +5,7 @@ import { Button } from "reactstrap";
 import { connect } from "react-redux";
 import { getHistory } from "../actions/historyActions";
 import getEvent from "../events";
+import { distanceInWordsToNow } from "date-fns";
 
 const MyContext = React.createContext();
 
@@ -29,10 +30,12 @@ export const SideBarButton = () => {
   const ctx = useContext(MyContext);
   return (
     <Button
+      size="sm"
+      outline
       style={{ position: "absolute", top: "61px", right: "5px" }}
       onClick={ctx.toggleMenu}
     >
-      Toggle menu
+      History Feed
     </Button>
   );
 };
@@ -66,7 +69,14 @@ const SideBar = props => {
         history.map((event, id) => {
           const { caption } = getEvent(event);
 
-          return <span key={id}>{caption}</span>;
+          return (
+            <div key={id}>
+              <span>{caption}</span>
+              <span style={{ fontSize: "small", marginLeft: "23px" }}>
+                {`${distanceInWordsToNow(event.timestamp)} ago`}{" "}
+              </span>
+            </div>
+          );
         })}
     </Menu>
   );

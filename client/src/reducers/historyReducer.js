@@ -19,11 +19,10 @@ export default function(state = initialState, action) {
         history: action.payload,
         loading: false
       };
-
     case CREATE_EVENT: {
       return {
         ...state,
-        history: action.payload,
+        history: [action.payload, ...state.history],
         loading: false
       };
     }
