@@ -3,13 +3,13 @@ import React from "react";
 const addFavorite = function addFavorite({ action }) {
   return {
     caption: (
-      <span>
+      <h6>
         You added{" "}
         <span className="underline">{`${action.symbol}/${
           action.currency
         }`}</span>{" "}
         to your favorites
-      </span>
+      </h6>
     )
   };
 };

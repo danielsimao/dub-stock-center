@@ -11,7 +11,7 @@ import { isEqual } from "lodash";
 
 const FavoritesStocks = props => {
   const [stocks, setStocks] = useState(null);
-  const [date, setDate] = useState("2019-02-06");
+  const [date] = useState("2019-02-06");
   const [isOpen, toggle] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 

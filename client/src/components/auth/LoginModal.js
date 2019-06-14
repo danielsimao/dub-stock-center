@@ -24,7 +24,7 @@ const LoginModal = props => {
   const toggle = useCallback(() => {
     props.clearErrors();
     toggleModal(!modal);
-  });
+  }, [modal, props]);
 
   useEffect(() => {
     if (props.error.id === "LOGIN_FAIL") {

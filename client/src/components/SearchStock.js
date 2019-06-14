@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, Spinner } from "reactstrap";
+import { Spinner } from "reactstrap";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import SearchForm from "./SearchForm";

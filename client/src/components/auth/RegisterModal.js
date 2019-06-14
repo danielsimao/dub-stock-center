@@ -25,7 +25,7 @@ const RegisterModel = props => {
   const toggle = useCallback(() => {
     props.clearErrors();
     toggleModal(!modal);
-  });
+  }, [modal, props]);
 
   useEffect(() => {
     if (props.error.id === "REGISTER_FAIL") {
