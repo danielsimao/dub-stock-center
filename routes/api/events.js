@@ -13,7 +13,7 @@ router.get("/:itemCount", auth, (req, res) => {
     .sort({ timestamp: -1 })
     .limit(req.params.itemCount ? parseInt(req.params.itemCount) : 10)
     .then(events =>
-      Event.countDocuments().then(count => {
+      Event.countDocuments({ user: id }).then(count => {
         res.json({ events, count });
       })
     )

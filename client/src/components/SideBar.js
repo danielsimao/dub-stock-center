@@ -75,7 +75,7 @@ const SideBar = props => {
             const { caption } = getEvent(event);
 
             return (
-              <div style={{ marginTop: 5 }} key={id}>
+              <div style={{ marginTop: 7 }} key={id}>
                 <span>{caption}</span>
                 <span style={{ fontSize: "small", marginLeft: "23px" }}>
                   {`${distanceInWordsToNow(event.timestamp)} ago`}{" "}
@@ -84,11 +84,25 @@ const SideBar = props => {
             );
           })}
         {props.history.history.length < props.history.count ? (
-          <Button style={{ width: "100%" }} onClick={fetchMoreData}>
+          <Button
+            style={{ width: "100%", marginTop: 7 }}
+            onClick={fetchMoreData}
+          >
             Load More
           </Button>
         ) : (
-          <div style={{ width: "100%", textAlign: "center" }}>Finito</div>
+          <div
+            style={{
+              width: "100%",
+              textAlign: "center",
+              marginTop: 7,
+              marginBottom: 7,
+              borderTop: "1px solid grey",
+              fontSize: "small"
+            }}
+          >
+            No More Data
+          </div>
         )}
       </>
     </Menu>
