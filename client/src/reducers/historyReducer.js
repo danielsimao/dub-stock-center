@@ -25,8 +25,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         history: () => {
-          state.history.pop();
-          return [action.payload, ...state.history];
+          if (state.history.length === state.count) {
+            return [action.payload, ...state.history];
+          } else {
+            state.history.pop();
+            return [action.payload, ...state.history];
+          }
         },
         count: state.count + 1,
         loading: false
