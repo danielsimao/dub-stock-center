@@ -22,19 +22,22 @@ export default function(state = initialState, action) {
         loading: false
       };
     case CREATE_EVENT: {
-      return {
-        ...state,
-        history: () => {
-          if (state.history.length === state.count) {
-            return [action.payload, ...state.history];
-          } else {
-            state.history.pop();
-            return [action.payload, ...state.history];
-          }
-        },
-        count: state.count + 1,
-        loading: false
-      };
+      if (state.history.length === state.count) {
+        return {
+          ...state,
+          history: [action.payload, ...state.history],
+          count: state.count + 1,
+          loading: false
+        };
+      } else {
+        state.history.pop();
+        return {
+          ...state,
+          history: [action.payload, ...state.history],
+          count: state.count + 1,
+          loading: false
+        };
+      }
     }
     case HISTORY_LOADING:
       return {
