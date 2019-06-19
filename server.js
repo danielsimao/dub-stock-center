@@ -23,11 +23,11 @@ app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/currency", require("./routes/api/currency"));
 app.use("/api/events", require("./routes/api/events"));
 
-app.use(express.static("public"));
+// app.use(express.static("public"));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "public", "index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.resolve(__dirname, "public", "index.html"));
+// });
 
 graphqlServer.express.use(app);
 
